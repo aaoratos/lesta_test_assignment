@@ -11,7 +11,7 @@ def isEven(value):
     return value % 2 == 0
 ```
 
-### [Решение на C++](./is_even/cpp/README.md) | [Решение на Python](./is_even/py/README.md) 
+### [Решение на C++](./is_even/cpp/) | [Решение на Python](./is_even/py/) 
 
 ## Вопрос №2
 На языке Python или С++ написать минимум по 2 класса реализовывающих циклический буфер FIFO.
