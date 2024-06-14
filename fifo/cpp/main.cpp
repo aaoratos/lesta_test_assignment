@@ -3,29 +3,32 @@
 #include <string>
 #include <vector>
 
-#include "containers.h"
+#include "containers.hpp"
 
 int main([[maybe_unused]] const int argc,
 		 [[maybe_unused]] const char *const *const argv)
 {
-	using namespace containers;
-
 	const std::vector<std::string> args(argv, argv + argc);
-	circular_buffer<std::string, memory_model::list> cb(3);
+	containers::circular_buffer<std::string, 5> cb;
 
-	std::for_each(args.cbegin(), args.cend(),
-	  [&](const auto& arg) -> void {
-		cb.push(arg);
-	});
+	for (const auto& arg : args) {
+		cb.push_back(arg);
+	}
 
-	while (!cb.is_empty()) {
-		std::cout << cb.pop() << ' ';
+	for (const auto& item : cb) {
+		std::cout << item << '\n';
 	}
 	std::cout << std::endl;
 
-	std::cout << "cb is full? " << std::boolalpha << cb.is_full() << '\n';
-	std::cout << "cb is empty? " << std::boolalpha << cb.is_empty() << '\n';
-	std::cout << "cb size is " << cb.size() << '\n';
+	cb.push_back("hello world");
+	cb.emplace_back("how are you?");
+	cb.emplace_front("you're gonna be ok...");
+	cb.push_back("just not tonight");
+
+	std::for_each(cb.begin(), cb.end(),
+				  [](const auto& item) -> void {
+						std::cout << item << '\n';
+					});
 
 	return EXIT_SUCCESS;
 }
